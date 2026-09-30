@@ -25,7 +25,8 @@ export default function HomePage() {
                 width={1600}
                 height={900}
                 priority
-                className="mx-auto block h-auto max-h-[28vh] w-full object-contain object-center transition-all duration-300 ease-out group-hover:scale-[1.02] group-hover:drop-shadow-[0_0_18px_rgba(255,255,255,0.35)] sm:max-h-[32vh] md:max-h-[36vh] lg:max-h-[40vh]"
+                className="mx-auto block h-auto object-contain object-center transition-transform duration-300 ease-out group-hover:scale-[1.01]"
+                style={{ width: 1600, maxWidth: '100%' }}
               />
             </Link>
 
@@ -35,7 +36,8 @@ export default function HomePage() {
                 alt="ランキングサイトホーム 下部"
                 width={1600}
                 height={900}
-                className="mx-auto block h-auto max-h-[28vh] w-full object-contain object-center transition-all duration-300 ease-out group-hover:scale-[1.02] group-hover:drop-shadow-[0_0_18px_rgba(255,255,255,0.35)] sm:max-h-[32vh] md:max-h-[36vh] lg:max-h-[40vh]"
+                className="mx-auto block h-auto object-contain object-center transition-transform duration-300 ease-out group-hover:scale-[1.01]"
+                style={{ width: 1600, maxWidth: '100%' }}
               />
             </Link>
           </section>
