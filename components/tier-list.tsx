@@ -95,7 +95,7 @@ export function TierList() {
                     width={30}
                     height={30}
                     className={cn(
-                      'size-full object-contain transition-transform duration-200 ease-out hover:scale-110',
+                      'size-full translate-y-0.5 object-contain transition-transform duration-200 ease-out hover:scale-110',
                       !selected && 'opacity-60',
                     )}
                   />
@@ -138,7 +138,7 @@ export function TierList() {
                     width={40}
                     height={40}
                     className={cn(
-                      'size-full object-contain transition-transform duration-200 ease-out hover:scale-110',
+                      'size-full translate-y-0.5 object-contain transition-transform duration-200 ease-out hover:scale-110',
                       !selected && 'opacity-60',
                     )}
                   />

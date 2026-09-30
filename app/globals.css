@@ -4,6 +4,47 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes home-image-shine-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-160%) skewX(-22deg);
+  }
+  8% {
+    opacity: 0.9;
+  }
+  38% {
+    opacity: 0.75;
+  }
+  52%,
+  100% {
+    opacity: 0;
+    transform: translateX(500%) skewX(-22deg);
+  }
+}
+
+.home-image-shine {
+  background: linear-gradient(
+    100deg,
+    transparent 8%,
+    rgb(255 255 255 / 12%) 35%,
+    rgb(255 255 255 / 75%) 50%,
+    rgb(255 255 255 / 12%) 65%,
+    transparent 92%
+  );
+  opacity: 0;
+}
+
+.group:hover .home-image-shine,
+.group:focus-visible .home-image-shine {
+  animation: home-image-shine-sweep 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-image-shine {
+    animation: none !important;
+  }
+}
+
 @theme inline {
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
