@@ -9,8 +9,8 @@ const DISCORD_URL = 'https://discord.gg/eEYKdQUXT'
 
 const navItems = [
   { label: 'ホーム', href: '/' },
-  { label: 'ティア', href: '#tiers' },
-  { label: 'ルール', href: '#rules' },
+  { label: 'ティア', href: '/tier' },
+  { label: 'ルール', href: '/rules' },
 ]
 
 function DiscordIcon({ className }: { className?: string }) {
@@ -27,21 +27,32 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="flex items-center gap-2" aria-label="MCPVPJAPAN ホーム">
-          <div className="flex size-7 items-center justify-center rounded-md border border-white/10 bg-slate-950/90 p-1 shadow-inner">
+        <Link href="/" className="flex items-center" aria-label="MCPVPJAPAN ホーム">
+          <div className="flex size-12 items-center justify-center rounded-md border border-white/10 bg-slate-950/90 p-0 shadow-inner">
             <Image
               src="/icons/MCPVP JAPAN.png"
               alt=""
-              width={28}
-              height={28}
+              width={48}
+              height={48}
               className="size-full object-contain"
               priority
             />
           </div>
-          <span className="font-mono text-sm font-bold tracking-wider">
-            MCPVP<span className="text-primary">JAPAN</span>
-          </span>
         </Link>
+
+        <div className="flex flex-1 items-center justify-center">
+          <div className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-slate-950/40 px-3 py-2 shadow-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4 text-muted-foreground">
+              <circle cx="11" cy="11" r="6" />
+              <path d="M16 16L21 21" strokeLinecap="round" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Player Search"
+              className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            />
+          </div>
+        </div>
 
         <nav aria-label="メイン" className="hidden md:block">
           <ul className="flex items-center gap-1">
