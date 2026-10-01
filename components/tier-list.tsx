@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 type Mode = { id: string; label: string; icon: string }
+type VanillaRanking = { name: string; rank: number; tier?: string }
 
 const modes: Mode[] = [
   { id: 'overall', label: 'Overall', icon: 'overall' },
@@ -32,9 +33,9 @@ const summaryModeIds = ['overall', 'java-overall', 'bedrock-overall']
 const summaryModes = modes.filter((mode) => summaryModeIds.includes(mode.id))
 const bedrockOnlyModeIds = ['midfight', 'sg', 'skywars', 'bedfight', 'buhc']
 
-export function TierList() {
+export function TierList({ vanillaRanking }: { vanillaRanking: VanillaRanking[] }) {
   const [activeSummary, setActiveSummary] = useState('overall')
-  const [activeKit, setActiveKit] = useState('overall')
+  const [activeKit, setActiveKit] = useState('vanilla')
 
   const activeMode =
     modes.find((m) => m.id === activeKit) ??
@@ -52,6 +53,8 @@ export function TierList() {
 
     return modes.filter((mode) => !summaryModeIds.includes(mode.id))
   })()
+
+  const isVanillaRanking = activeMode.id === 'vanilla' && vanillaRanking.length > 0
 
   return (
     <section id="tiers" aria-labelledby="tiers-heading" className="mx-auto max-w-7xl py-1 md:py-1">
@@ -156,22 +159,42 @@ export function TierList() {
         aria-labelledby={`tab-${activeMode.id}`}
         className="rounded-b-2xl rounded-tr-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900/90 via-zinc-950/95 to-black p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:p-6"
       >
-        <div className="hidden grid-cols-[3rem_1fr_7rem_18rem] gap-4 px-4 pb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground md:grid">
-          <span>#</span>
-          <span>Player</span>
-          <span className="text-center">Region</span>
-          <span className="text-center">Tiers</span>
-        </div>
-
-        <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-slate-950/20 px-4 py-16 text-center md:px-6">
-          <div className="flex size-14 items-center justify-center rounded-full border border-dashed border-border bg-slate-900/60 text-2xl text-muted-foreground">
-            —
+        {isVanillaRanking ? (
+          <>
+            <div className="grid grid-cols-[4rem_1fr_7rem] gap-4 px-4 pb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <span className="text-center">Rank</span>
+              <span>Player</span>
+              <span className="text-center">Tier</span>
+            </div>
+            <div className="space-y-2">
+              {vanillaRanking
+                .slice()
+                .sort((first, second) => first.rank - second.rank)
+                .map((player) => (
+                  <div
+                    key={player.name}
+                    className="grid grid-cols-[4rem_1fr_7rem] items-center gap-4 rounded-xl border border-border bg-slate-950/20 px-4 py-3 text-sm text-foreground"
+                  >
+                    <span className="text-center font-bold text-red-200">{player.rank}</span>
+                    <span className="truncate font-semibold text-white">{player.name}</span>
+                    <span className="text-center font-semibold text-red-100">
+                      {player.tier || (player.rank === 1 ? 'HT1' : '未登録')}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-slate-950/20 px-4 py-16 text-center md:px-6">
+            <div className="flex size-14 items-center justify-center rounded-full border border-dashed border-border bg-slate-900/60 text-2xl text-muted-foreground">
+              —
+            </div>
+            <p className="font-semibold">まだランクインしているプレイヤーはいません</p>
+            <p className="text-sm text-muted-foreground">
+              {activeMode.label} のティアテストを受けたプレイヤーがここに表示されます。
+            </p>
           </div>
-          <p className="font-semibold">まだランクインしているプレイヤーはいません</p>
-          <p className="text-sm text-muted-foreground">
-            {activeMode.label} のティアテストを受けたプレイヤーがここに表示されます。
-          </p>
-        </div>
+        )}
       </div>
     </section>
   )

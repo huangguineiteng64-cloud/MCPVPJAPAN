@@ -3,7 +3,34 @@ import { Swords } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { TierList } from '@/components/tier-list'
 
-export default function TierPage() {
+type VanillaRanking = { name: string; rank: number; tier?: string }
+
+async function getVanillaRanking(): Promise<VanillaRanking[]> {
+  try {
+    const response = await fetch('http://localhost:3001/api/ranking', { cache: 'no-store' })
+    if (!response.ok) return []
+
+    const data: unknown = await response.json()
+    if (!Array.isArray(data)) return []
+
+    return data.filter(
+      (player): player is VanillaRanking =>
+        typeof player === 'object' &&
+        player !== null &&
+        'name' in player &&
+        typeof player.name === 'string' &&
+        'rank' in player &&
+        typeof player.rank === 'number' &&
+        (!('tier' in player) || typeof player.tier === 'string'),
+    )
+  } catch {
+    return []
+  }
+}
+
+export default async function TierPage() {
+  const vanillaRanking = await getVanillaRanking()
+
   return (
     <>
       <SiteHeader />
@@ -13,7 +40,7 @@ export default function TierPage() {
             <Swords className="size-3.5" />
             <span>Tier</span>
           </div>
-          <TierList />
+          <TierList vanillaRanking={vanillaRanking} />
         </div>
       </main>
     </>
