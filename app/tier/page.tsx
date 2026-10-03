@@ -4,16 +4,19 @@ import { SiteHeader } from '@/components/site-header'
 import { TierList } from '@/components/tier-list'
 
 type VanillaRanking = { name: string; rank: number; tier?: string }
+const lastKnownVanillaRanking: VanillaRanking[] = [
+  { name: 'gmm_youtube', rank: 1, tier: 'HT1' },
+]
 
-async function getVanillaRanking(): Promise<VanillaRanking[]> {
+async function getVanillaRanking(): Promise<{ ranking: VanillaRanking[]; isStale: boolean }> {
   try {
     const response = await fetch('http://localhost:3001/api/ranking', { cache: 'no-store' })
-    if (!response.ok) return []
+    if (!response.ok) return { ranking: lastKnownVanillaRanking, isStale: true }
 
     const data: unknown = await response.json()
-    if (!Array.isArray(data)) return []
+    if (!Array.isArray(data)) return { ranking: lastKnownVanillaRanking, isStale: true }
 
-    return data.filter(
+    const ranking = data.filter(
       (player): player is VanillaRanking =>
         typeof player === 'object' &&
         player !== null &&
@@ -23,13 +26,14 @@ async function getVanillaRanking(): Promise<VanillaRanking[]> {
         typeof player.rank === 'number' &&
         (!('tier' in player) || typeof player.tier === 'string'),
     )
+    return { ranking, isStale: false }
   } catch {
-    return []
+    return { ranking: lastKnownVanillaRanking, isStale: true }
   }
 }
 
 export default async function TierPage() {
-  const vanillaRanking = await getVanillaRanking()
+  const { ranking: vanillaRanking, isStale } = await getVanillaRanking()
 
   return (
     <>
@@ -40,7 +44,7 @@ export default async function TierPage() {
             <Swords className="size-3.5" />
             <span>Tier</span>
           </div>
-          <TierList vanillaRanking={vanillaRanking} />
+          <TierList vanillaRanking={vanillaRanking} initialIsStale={isStale} />
         </div>
       </main>
     </>

@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 type Mode = { id: string; label: string; icon: string }
 type VanillaRanking = { name: string; rank: number; tier?: string }
+const rankingRefreshInterval = 30_000
 
 const modes: Mode[] = [
   { id: 'overall', label: 'Overall', icon: 'overall' },
@@ -33,9 +34,87 @@ const summaryModeIds = ['overall', 'java-overall', 'bedrock-overall']
 const summaryModes = modes.filter((mode) => summaryModeIds.includes(mode.id))
 const bedrockOnlyModeIds = ['midfight', 'sg', 'skywars', 'bedfight', 'buhc']
 
-export function TierList({ vanillaRanking }: { vanillaRanking: VanillaRanking[] }) {
+export function TierList({
+  vanillaRanking: initialVanillaRanking,
+  initialIsStale,
+}: {
+  vanillaRanking: VanillaRanking[]
+  initialIsStale: boolean
+}) {
+  const [vanillaRanking, setVanillaRanking] = useState(initialVanillaRanking)
+  const [rankingRefreshFailed, setRankingRefreshFailed] = useState(initialIsStale)
   const [activeSummary, setActiveSummary] = useState('overall')
   const [activeKit, setActiveKit] = useState('vanilla')
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+    let disposed = false
+    const cacheKey = 'vanilla-ranking-cache'
+
+    const refreshRanking = async () => {
+      try {
+        const response = await fetch('/api/ranking', { cache: 'no-store' })
+        if (!response.ok) throw new Error('Ranking refresh failed')
+
+        const data: unknown = await response.json()
+        if (!Array.isArray(data)) throw new Error('Invalid ranking response')
+
+        const ranking = data.filter(
+          (player): player is VanillaRanking =>
+            typeof player === 'object' &&
+            player !== null &&
+            'name' in player &&
+            typeof player.name === 'string' &&
+            'rank' in player &&
+            typeof player.rank === 'number' &&
+            (!('tier' in player) || typeof player.tier === 'string'),
+        )
+
+        if (!disposed) {
+          setVanillaRanking(ranking)
+          setRankingRefreshFailed(false)
+          try {
+            window.localStorage.setItem(cacheKey, JSON.stringify(ranking))
+          } catch {
+            // Keep the in-memory update even when browser storage is unavailable.
+          }
+        }
+      } catch {
+        if (!disposed) setRankingRefreshFailed(true)
+      } finally {
+        if (!disposed) timer = setTimeout(refreshRanking, rankingRefreshInterval)
+      }
+    }
+
+    try {
+      const cachedData = window.localStorage.getItem(cacheKey)
+      if (cachedData) {
+        const parsedData: unknown = JSON.parse(cachedData)
+        if (Array.isArray(parsedData)) {
+          const cachedRanking = parsedData.filter(
+            (player): player is VanillaRanking =>
+              typeof player === 'object' &&
+              player !== null &&
+              'name' in player &&
+              typeof player.name === 'string' &&
+              'rank' in player &&
+              typeof player.rank === 'number' &&
+              (!('tier' in player) || typeof player.tier === 'string'),
+          )
+          if (cachedRanking.length > 0) setVanillaRanking(cachedRanking)
+        }
+      }
+    } catch {
+      // Ignore invalid or unavailable browser storage and use the server data.
+    }
+
+    void refreshRanking()
+
+    return () => {
+      disposed = true
+      clearTimeout(timer)
+    }
+  }, [])
 
   const activeMode =
     modes.find((m) => m.id === activeKit) ??
@@ -159,6 +238,14 @@ export function TierList({ vanillaRanking }: { vanillaRanking: VanillaRanking[] 
         aria-labelledby={`tab-${activeMode.id}`}
         className="rounded-b-2xl rounded-tr-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900/90 via-zinc-950/95 to-black p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:p-6"
       >
+        {activeMode.id === 'vanilla' && (
+          <p className="mb-3 text-right text-xs text-muted-foreground" aria-live="polite">
+            {rankingRefreshFailed
+              ? 'APIの確認に失敗しました。30秒後に再試行します。'
+              : 'ランキングを30秒ごとに自動確認中'}
+          </p>
+        )}
+
         {isVanillaRanking ? (
           <>
             <div className="grid grid-cols-[4rem_1fr_7rem] gap-4 px-4 pb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
