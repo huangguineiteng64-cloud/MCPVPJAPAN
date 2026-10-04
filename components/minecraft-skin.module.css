@@ -1,0 +1,29 @@
+.link {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.scene {
+  position: relative;
+  width: 112px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  background: rgb(9 9 11 / 90%);
+  color: rgb(254 202 202);
+  font-size: 0.75rem;
+  text-align: center;
+}

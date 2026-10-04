@@ -26,6 +26,8 @@ async function getVanillaRanking(): Promise<{ ranking: VanillaRanking[]; isStale
         typeof player.rank === 'number' &&
         (!('tier' in player) || typeof player.tier === 'string'),
     )
+    if (ranking.length === 0) return { ranking: lastKnownVanillaRanking, isStale: true }
+
     return { ranking, isStale: false }
   } catch {
     return { ranking: lastKnownVanillaRanking, isStale: true }
