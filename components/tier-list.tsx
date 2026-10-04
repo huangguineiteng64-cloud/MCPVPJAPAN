@@ -292,7 +292,12 @@ export function TierList({
         className="rounded-b-2xl rounded-tr-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900/90 via-zinc-950/95 to-black p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:p-6"
       >
         {showsRankingList ? (
-          <div className={activeSummaryKits ? 'overflow-x-auto' : undefined}>
+          <div
+            className={cn(
+              'lg:max-h-[60vh] lg:overflow-y-auto lg:overscroll-contain',
+              activeSummaryKits && 'overflow-x-auto',
+            )}
+          >
             <div className="space-y-0">
               {Array.from({ length: 100 }, (_, index) => index + 1).map((rank) => (
                 <div
@@ -404,7 +409,7 @@ export function TierList({
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto lg:max-h-[60vh] lg:overflow-y-auto lg:overscroll-contain">
             <div className="grid min-w-[900px] grid-cols-5 gap-2">
               {tierColumns.map((column) => {
                 const players =
