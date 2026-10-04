@@ -9,6 +9,7 @@ const skinTextureUrl = 'https://crafatar.com/skins/7eaa988552384ae4ac020ed99ceeb
 export function MinecraftSkin() {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const isHoveredRef = useRef(false)
   const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
@@ -41,7 +42,18 @@ export function MinecraftSkin() {
     viewer.camera.position.set(0, 10, 28)
     viewer.controls.update()
     viewer.animation = new FunctionAnimation((player, progress) => {
-      player.skin.head.rotation.y = Math.sin(progress * 0.8) * 0.12
+      if (!isHoveredRef.current) {
+        player.skin.head.rotation.x = 0
+        player.skin.leftArm.rotation.x = 0
+        player.skin.rightArm.rotation.x = 0
+        player.skin.rightArm.rotation.z = 0
+        return
+      }
+
+      player.skin.head.rotation.x = 0
+      player.skin.leftArm.rotation.x = 0
+      player.skin.rightArm.rotation.x = 0
+      player.skin.rightArm.rotation.z = -2.7 + Math.sin(progress * 3) * 0.12
     })
 
     void viewer.loadSkin(skinTextureUrl, { model: 'auto-detect' }).catch(() => {
@@ -71,6 +83,14 @@ export function MinecraftSkin() {
       rel="noreferrer"
       aria-label="_gmmのNameMCプロフィールを開く"
       className={styles.link}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+          isHoveredRef.current = true
+        }
+      }}
+      onPointerLeave={() => {
+        isHoveredRef.current = false
+      }}
     >
       <div
         ref={containerRef}
