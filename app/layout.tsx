@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
+import '@fontsource/press-start-2p/latin-400.css'
 import './globals.css'
 
 const notoSansJP = Noto_Sans_JP({ subsets: ['latin'], weight: ['400', '500', '700'] })

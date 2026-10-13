@@ -194,7 +194,7 @@ export default function RulesPage() {
           </div>
 
           <div className="rounded-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)] md:p-6">
-            <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
+            <div className="mb-4 grid grid-cols-2 gap-2">
               {tabs.map((tab) => {
                 const selected = activeTab === tab.id
                 const icon = tab.id === 'tier-points' ? '/icons/overall.png' : '/icons/sword.png'
@@ -207,7 +207,7 @@ export default function RulesPage() {
                     aria-selected={selected}
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
-                      'relative inline-flex min-w-[180px] items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200',
+                      'relative inline-flex w-full min-w-0 items-center justify-center gap-2 rounded-full border px-2 py-2 text-xs font-semibold transition-all duration-200 sm:px-4 sm:text-sm',
                       selected
                         ? 'border-red-500/40 bg-red-500/10 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)]'
                         : 'border-border bg-black/20 text-muted-foreground hover:border-red-500/20 hover:text-foreground',
@@ -227,48 +227,58 @@ export default function RulesPage() {
                 </div>
 
                 <div className="overflow-hidden rounded-xl border border-red-500/20 bg-zinc-950/70">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full border-separate border-spacing-0 text-left text-sm text-zinc-200">
-                      <thead className="bg-zinc-900/90 text-xs uppercase tracking-[0.18em] text-zinc-400">
+                    <table
+                      className="w-full table-fixed border-separate border-spacing-0 text-left text-zinc-200"
+                      style={{ fontFamily: '"Press Start 2P", monospace' }}
+                    >
+                      <colgroup>
+                        <col className="w-14" />
+                        <col />
+                        <col className="w-12" />
+                        <col />
+                        <col className="w-12" />
+                      </colgroup>
+                      <thead className="bg-zinc-900/90 text-[10px] uppercase tracking-normal text-zinc-400 sm:text-xs">
                         <tr>
-                          <th className="px-4 py-3 font-semibold">Tier</th>
-                          <th className="px-4 py-3 font-semibold">High</th>
-                          <th className="px-4 py-3 font-semibold">Points</th>
-                          <th className="px-4 py-3 font-semibold">Low</th>
-                          <th className="px-4 py-3 font-semibold">Points</th>
+                          <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">Tier</th>
+                          <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">High</th>
+                          <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">Pts</th>
+                          <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">Low</th>
+                          <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">Pts</th>
                         </tr>
                       </thead>
                       <tbody>
                         {tierPoints.map(({ tier, icon, color, glow, high, highPoints, low, lowPoints }) => (
                           <tr key={tier} className="border-t border-zinc-800 bg-zinc-950/60">
-                            <td className="px-4 py-3">
-                              <div className="flex items-center gap-3">
-                                <img src={icon} alt={tier} className="size-12 object-contain" />
-                              </div>
+                            <td className="px-1 py-2 align-middle sm:px-2 sm:py-3">
+                              <img src={icon} alt={tier} className="mx-auto size-12 object-contain" />
                             </td>
-                            <td className="px-4 py-3">
+                            <td className="px-1 py-2 text-center align-middle sm:px-2 sm:py-3">
                               <span
-                                className={cn('text-lg font-black tracking-[0.18em]', glow)}
+                                className={cn('inline-block -translate-y-1 text-[11px] font-bold tracking-normal sm:text-sm', glow)}
                                 style={{ color }}
                               >
                                 {high}
                               </span>
                             </td>
-                            <td className="px-4 py-3 font-black text-white">{highPoints}</td>
-                            <td className="px-4 py-3">
+                            <td className="px-1 py-2 text-center align-middle text-xs font-black text-white sm:px-2 sm:py-3 sm:text-sm">
+                              {highPoints}
+                            </td>
+                            <td className="px-1 py-2 text-center align-middle sm:px-2 sm:py-3">
                               <span
-                                className={cn('text-lg font-black tracking-[0.18em]', glow)}
+                                className={cn('inline-block -translate-y-1 text-[11px] font-bold tracking-normal sm:text-sm', glow)}
                                 style={{ color }}
                               >
                                 {low}
                               </span>
                             </td>
-                            <td className="px-4 py-3 font-black text-white">{lowPoints}</td>
+                            <td className="px-1 py-2 text-center align-middle text-xs font-black text-white sm:px-2 sm:py-3 sm:text-sm">
+                              {lowPoints}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
-                  </div>
                 </div>
               </div>
             ) : (
