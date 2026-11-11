@@ -215,14 +215,14 @@ export function TierList({
                 className={cn(
                   'relative flex min-w-[110px] shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border px-3 py-2 text-sm font-semibold transition-all duration-200',
                   selected
-                    ? 'border-red-500/40 bg-red-500/10 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)]'
-                    : 'border-border bg-black/20 text-muted-foreground hover:border-red-500/20 hover:text-foreground',
+                    ? 'border-slate-300/40 bg-slate-300/10 text-white shadow-[0_0_12px_rgba(148,163,184,0.2)]'
+                    : 'border-border bg-[#030a27]/40 text-muted-foreground hover:border-slate-300/30 hover:text-foreground',
                 )}
               >
                 <div
                   className={cn(
-                    'relative flex size-8 items-center justify-center overflow-hidden rounded-md border border-white/10 bg-slate-950/90 p-1 shadow-inner transition-transform duration-200 ease-out hover:scale-110',
-                    !selected && 'bg-slate-900/75',
+                    'relative flex size-8 items-center justify-center overflow-hidden rounded-md border border-white/10 bg-[#030a27] p-1 shadow-inner transition-transform duration-200 ease-out hover:scale-110',
+                    !selected && 'bg-[#09152a]',
                   )}
                 >
                   <Image
@@ -264,8 +264,8 @@ export function TierList({
               >
                 <div
                   className={cn(
-                    'relative flex size-12 items-center justify-center overflow-hidden rounded-md border border-white/10 bg-slate-950/90 p-1 shadow-inner transition-transform duration-300 ease-out hover:scale-110',
-                    !selected && 'bg-slate-900/75',
+                    'relative flex size-12 items-center justify-center overflow-hidden rounded-md border border-white/10 bg-[#030a27] p-1 shadow-inner transition-transform duration-300 ease-out hover:scale-110',
+                    !selected && 'bg-[#09152a]',
                   )}
                 >
                   <Image
@@ -290,7 +290,7 @@ export function TierList({
         id="tier-panel"
         role="tabpanel"
         aria-labelledby={`tab-${activeMode.id}`}
-        className="rounded-b-2xl rounded-tr-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900/90 via-zinc-950/95 to-black p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:p-6"
+        className="rounded-b-2xl rounded-tr-2xl border border-slate-400/20 bg-gradient-to-br from-[#101d31]/95 via-[#071226]/95 to-[#030711] p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] md:p-6"
       >
         {showsRankingList ? (
           <div
@@ -315,7 +315,7 @@ export function TierList({
                   >
                     <div
                       className={cn(
-                        'relative flex items-start overflow-hidden rounded-none bg-slate-800/90 text-foreground shadow-sm sm:items-center',
+                        'relative flex items-start overflow-hidden rounded-none bg-[#14233a]/95 text-foreground shadow-sm sm:items-center',
                         activeSummaryKits ? 'top-0 h-full flex-wrap sm:top-[-10px] sm:h-[68px] sm:flex-nowrap' : 'top-[-10px] h-[68px]',
                       )}
                     >
@@ -362,7 +362,7 @@ export function TierList({
                               title={kit.label}
                               className="flex h-12 w-full flex-col items-center justify-center gap-0.5 sm:h-full sm:w-12 sm:shrink-0 sm:gap-1"
                             >
-                              <span className="flex size-[22px] items-center justify-center rounded-full border border-slate-600 bg-slate-900 sm:size-7">
+                              <span className="flex size-[22px] items-center justify-center rounded-full border border-slate-600 bg-[#081327] sm:size-7">
                                 <Image
                                   src={`/icons/${kit.icon}.png`}
                                   alt={kit.label}
@@ -376,7 +376,7 @@ export function TierList({
                                   'flex h-4 min-w-6 items-center justify-center rounded-full px-1 text-[9px] font-bold leading-none sm:min-w-8 sm:text-[10px]',
                                   kit.id === 'vanilla'
                                     ? 'bg-amber-500/20 text-amber-300'
-                                    : 'bg-slate-700/80 text-slate-300',
+                                    : 'bg-[#26364d] text-slate-300',
                                 )}
                               >
                                 {rank === 1 && kit.id === 'vanilla' ? firstVanillaTier : ''}
@@ -386,7 +386,7 @@ export function TierList({
                         </div>
                       )}
                       {!activeSummaryKits && (
-                        <div className="z-[1] flex w-24 shrink-0 items-center justify-center gap-1.5 border-l border-slate-600/60 sm:w-28">
+                        <div className="z-[1] flex w-24 shrink-0 items-center justify-center gap-1.5 border-l border-slate-500/50 sm:w-28">
                           {rank === 1 && (
                             <>
                               <Image
@@ -443,7 +443,7 @@ export function TierList({
                       {players.map((player) => (
                         <div
                           key={`${player.name}-${player.rank}`}
-                          className="flex h-12 min-w-0 items-center gap-1 border-l-2 border-slate-500/70 bg-slate-700/70 px-1 sm:gap-2 sm:px-3"
+                          className="flex h-12 min-w-0 items-center gap-1 border-l-2 border-slate-400/50 bg-[#172740]/90 px-1 sm:gap-2 sm:px-3"
                         >
                           <RankingAvatar playerName={player.name} />
                           <span className="min-w-0 flex-1 truncate text-[8px] font-medium text-white sm:text-[10px]">

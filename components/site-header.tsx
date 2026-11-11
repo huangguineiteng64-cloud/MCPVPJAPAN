@@ -2,16 +2,15 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Crown, House, ScrollText } from 'lucide-react'
 import { PlayerSearch } from '@/components/player-search'
 
 const DISCORD_URL = 'https://discord.gg/eEYKdQUXT'
 
 const navItems = [
-  { label: 'ホーム', href: '/' },
-  { label: 'ティアリスト', href: '/tier' },
-  { label: 'ルール', href: '/rules' },
+  { label: 'ホーム', href: '/', icon: House },
+  { label: 'ティアリスト', href: '/tier', icon: Crown },
+  { label: 'ルール', href: '/rules', icon: ScrollText },
 ]
 
 function DiscordIcon({ className }: { className?: string }) {
@@ -23,85 +22,63 @@ function DiscordIcon({ className }: { className?: string }) {
 }
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false)
-
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
-        <Link href="/" className="flex items-center" aria-label="MCPVPJAPAN ホーム">
-          <div className="flex size-12 items-center justify-center rounded-md border border-white/10 bg-slate-950/90 p-0 shadow-inner">
-            <Image
-              src="/icons/MCPVP JAPAN.png"
-              alt=""
-              width={48}
-              height={48}
-              className="size-full object-contain"
-              priority
-            />
-          </div>
-        </Link>
-
-        <div className="flex flex-1 items-center justify-center">
-          <PlayerSearch />
-        </div>
-
-        <nav aria-label="メイン" className="hidden md:block">
-          <ul className="flex items-center gap-1">
+    <header className="sticky top-0 z-50 border-b border-slate-400/20 bg-[linear-gradient(180deg,rgba(8,18,42,0.97),rgba(3,10,27,0.97))] shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+      <div className="grid h-16 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-t border-white/10 px-2 sm:px-6">
+        <nav aria-label="メイン" className="min-w-0 justify-self-end">
+          <ul className="flex items-center gap-1 sm:gap-2">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  aria-label={item.label}
+                  title={item.label}
+                  className="grid size-8 place-items-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-200 transition-colors hover:border-slate-300/40 hover:bg-white/10 hover:text-white sm:size-10 lg:flex lg:h-12 lg:w-auto lg:gap-2 lg:px-3"
                 >
-                  {item.label}
+                  <item.icon className="size-6 sm:size-7 lg:size-6" aria-hidden="true" />
+                  <span className="hidden whitespace-nowrap text-sm font-medium lg:inline">
+                    {item.label}
+                  </span>
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <Link
+          href="/"
+          className="relative z-10 col-start-2 flex size-16 items-center justify-center rounded-xl border border-slate-400/30 bg-[#030a27] p-1 shadow-[0_8px_24px_rgba(0,0,0,0.55)] ring-1 ring-white/5 sm:size-20 lg:size-24"
+          aria-label="MCPVPJAPAN ホーム"
+        >
+          <Image
+            src="/icons/MCPVP JAPAN.png"
+            alt=""
+            width={96}
+            height={96}
+            className="size-full object-contain"
+            priority
+          />
+        </Link>
+
+        <div className="col-start-3 flex items-center justify-self-start">
           <a
             href={DISCORD_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.03] px-2 text-xs text-slate-200 transition-colors hover:border-slate-300/40 hover:bg-white/10 hover:text-white sm:h-12 sm:gap-2 sm:px-4 sm:text-base"
           >
-            <DiscordIcon className="size-3.5" />
+            <DiscordIcon className="size-5 text-slate-300 sm:size-7" />
             <span>Discord</span>
             <span className="sr-only">（新しいタブで公式Discordサーバーを開く）</span>
           </a>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
-            className="rounded-md p-1.5 text-muted-foreground hover:text-foreground md:hidden"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
         </div>
       </div>
 
-      {open && (
-        <nav id="mobile-nav" aria-label="モバイル" className="border-t border-border md:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col px-4 py-2">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-md px-2 py-2.5 text-sm text-muted-foreground hover:text-foreground"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+      <div className="border-t border-white/[0.06] bg-[#030a27]/70 px-4 py-3">
+        <div className="mx-auto max-w-md">
+          <PlayerSearch />
+        </div>
+      </div>
     </header>
   )
 }

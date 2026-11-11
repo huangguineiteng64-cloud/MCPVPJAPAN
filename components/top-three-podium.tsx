@@ -66,7 +66,7 @@ export function TopThreePodium() {
   return (
     <section
       aria-labelledby="top-rankings-title"
-      className="relative mx-auto mb-8 max-w-5xl overflow-hidden rounded-2xl border border-slate-500/20 bg-[radial-gradient(ellipse_at_50%_80%,rgba(245,158,11,0.12),transparent_42%),linear-gradient(180deg,rgba(10,14,27,0.96),rgba(8,10,19,0.98))] px-4 pb-5 pt-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] sm:px-8 sm:pb-8 sm:pt-7"
+      className="relative mx-auto mb-8 max-w-5xl overflow-hidden rounded-2xl border border-slate-500/20 bg-[radial-gradient(ellipse_at_50%_80%,rgba(59,130,246,0.12),transparent_42%),linear-gradient(180deg,rgba(10,19,37,0.96),rgba(5,11,24,0.98))] px-4 pb-5 pt-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] sm:px-8 sm:pb-8 sm:pt-7"
     >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="absolute left-[12%] top-1/3 size-1 rounded-full bg-white/70 shadow-[0_0_10px_3px_rgba(255,255,255,0.25)]" />

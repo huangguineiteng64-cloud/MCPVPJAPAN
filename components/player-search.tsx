@@ -68,7 +68,7 @@ export function PlayerSearch() {
 
   return (
     <div className="relative w-full max-w-md">
-      <div className="flex items-center gap-2 rounded-full border border-border bg-slate-950/40 px-3 py-2 shadow-inner">
+      <div className="flex items-center gap-2 rounded-full border border-border bg-[#030a27]/80 px-3 py-2 shadow-inner">
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -97,7 +97,7 @@ export function PlayerSearch() {
         />
       </div>
       {isOpen && hasQuery && (
-        <div className="absolute inset-x-0 top-full z-[60] mt-2 max-h-80 overflow-y-auto rounded-lg border border-border bg-slate-950 p-1 shadow-xl">
+        <div className="absolute inset-x-0 top-full z-[60] mt-2 max-h-80 overflow-y-auto rounded-lg border border-border bg-[#071226] p-1 shadow-xl">
           {players === null && !loadError ? (
             <p className="px-3 py-2 text-sm text-muted-foreground" role="status">
               プレイヤーを検索中...
@@ -127,7 +127,7 @@ export function PlayerSearch() {
                     <Link
                       href={`/player/${encodeURIComponent(player.name)}`}
                       onClick={() => setIsOpen(false)}
-                      className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-foreground hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+                      className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm text-foreground hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
                     >
                       <RankingAvatar playerName={player.name} />
                       <span className="truncate">{player.name}</span>

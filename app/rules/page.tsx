@@ -188,12 +188,12 @@ export default function RulesPage() {
       <SiteHeader />
       <main className="min-h-[calc(100vh-3.5rem)]">
         <div className="mx-auto max-w-5xl px-4 pt-4 md:px-6 lg:px-8">
-          <div className="mb-3 flex items-center gap-2 border-b border-red-500/20 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-red-200/80">
+          <div className="mb-3 flex items-center gap-2 border-b border-slate-400/20 pb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-300/80">
             <ShieldCheck className="size-3.5" />
             <span>Rules</span>
           </div>
 
-          <div className="rounded-2xl border border-red-500/20 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)] md:p-6">
+          <div className="rounded-2xl border border-slate-400/20 bg-gradient-to-br from-[#101d31] via-[#071226] to-[#030711] p-4 shadow-[0_18px_40px_rgba(0,0,0,0.45)] md:p-6">
             <div className="mb-4 grid grid-cols-2 gap-2">
               {tabs.map((tab) => {
                 const selected = activeTab === tab.id
@@ -209,8 +209,8 @@ export default function RulesPage() {
                     className={cn(
                       'relative inline-flex w-full min-w-0 items-center justify-center gap-2 rounded-full border px-2 py-2 text-xs font-semibold transition-all duration-200 sm:px-4 sm:text-sm',
                       selected
-                        ? 'border-red-500/40 bg-red-500/10 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)]'
-                        : 'border-border bg-black/20 text-muted-foreground hover:border-red-500/20 hover:text-foreground',
+                        ? 'border-slate-300/40 bg-slate-300/10 text-white shadow-[0_0_12px_rgba(148,163,184,0.2)]'
+                        : 'border-border bg-[#030a27]/40 text-muted-foreground hover:border-slate-300/30 hover:text-foreground',
                     )}
                   >
                     <img src={icon} alt={tab.label} className="size-5 object-contain" />
@@ -226,9 +226,9 @@ export default function RulesPage() {
                   <h1 className="text-3xl font-black text-white">Tierポイント</h1>
                 </div>
 
-                <div className="overflow-hidden rounded-xl border border-red-500/20 bg-zinc-950/70">
+                <div className="overflow-hidden rounded-xl border border-slate-400/20 bg-[#030a27]/70">
                     <table
-                      className="w-full table-fixed border-separate border-spacing-0 text-left text-zinc-200"
+                      className="w-full table-fixed border-separate border-spacing-0 text-left text-slate-200"
                       style={{ fontFamily: '"Press Start 2P", monospace' }}
                     >
                       <colgroup>
@@ -238,7 +238,7 @@ export default function RulesPage() {
                         <col />
                         <col className="w-12" />
                       </colgroup>
-                      <thead className="bg-zinc-900/90 text-[10px] uppercase tracking-normal text-zinc-400 sm:text-xs">
+                      <thead className="bg-[#14233a] text-[10px] uppercase tracking-normal text-slate-400 sm:text-xs">
                         <tr>
                           <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">Tier</th>
                           <th className="px-1 py-2 text-center font-semibold sm:px-2 sm:py-3">High</th>
@@ -249,7 +249,7 @@ export default function RulesPage() {
                       </thead>
                       <tbody>
                         {tierPoints.map(({ tier, icon, color, glow, high, highPoints, low, lowPoints }) => (
-                          <tr key={tier} className="border-t border-zinc-800 bg-zinc-950/60">
+                          <tr key={tier} className="border-t border-slate-700/60 bg-[#071226]/70">
                             <td className="px-1 py-2 align-middle sm:px-2 sm:py-3">
                               <img src={icon} alt={tier} className="mx-auto size-12 object-contain" />
                             </td>
@@ -283,15 +283,15 @@ export default function RulesPage() {
               </div>
             ) : (
               <article className="space-y-7">
-                <header className="border-b border-zinc-800 pb-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-300/80">Rules</p>
+                <header className="border-b border-slate-700/70 pb-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300/80">Rules</p>
                   <h1 className="mt-2 text-3xl font-black text-white">コミュニティルール・利用規約</h1>
-                  <p className="mt-2 text-sm text-zinc-400">最終更新日：2026年8月5日</p>
+                  <p className="mt-2 text-sm text-slate-400">最終更新日：2026年8月5日</p>
                 </header>
 
-                <div className="space-y-7 text-sm leading-7 text-zinc-300">
+                <div className="space-y-7 text-sm leading-7 text-slate-300">
                   {communityRules.map((section) => (
-                    <section key={section.heading} className="border-b border-zinc-800 pb-6 last:border-0">
+                    <section key={section.heading} className="border-b border-slate-700/60 pb-6 last:border-0">
                       <h2 className="text-lg font-bold text-white">{section.heading}</h2>
                       {section.paragraphs && (
                         <div className="mt-2 space-y-2">
@@ -299,7 +299,7 @@ export default function RulesPage() {
                         </div>
                       )}
                       {section.items && (
-                        <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-red-300">
+                        <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-slate-300">
                           {section.items.map((item) => <li key={item}>{item}</li>)}
                         </ul>
                       )}
@@ -307,14 +307,14 @@ export default function RulesPage() {
                         <div className="mt-5 space-y-5">
                           {section.subsections.map((subsection, index) => (
                             <div key={`${section.heading}-${index}`}>
-                              {subsection.heading && <h3 className="font-semibold text-red-100">{subsection.heading}</h3>}
+                              {subsection.heading && <h3 className="font-semibold text-slate-100">{subsection.heading}</h3>}
                               {subsection.paragraphs && (
                                 <div className="mt-2 space-y-2">
                                   {subsection.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                                 </div>
                               )}
                               {subsection.items && (
-                                <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-red-300">
+                                <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-slate-300">
                                   {subsection.items.map((item) => <li key={item}>{item}</li>)}
                                 </ul>
                               )}
