@@ -1,35 +1,12 @@
-type RankingPlayer = { name: string; rank: number };
+import { fetchRanking, type RankingPlayer } from "@/lib/ranking-api";
 
 export const dynamic = "force-dynamic";
-
-function isRankingPlayer(player: unknown): player is RankingPlayer {
-  return (
-    typeof player === "object" &&
-    player !== null &&
-    "name" in player &&
-    typeof player.name === "string" &&
-    "rank" in player &&
-    typeof player.rank === "number"
-  );
-}
 
 export default async function RankingPage() {
   let ranking: RankingPlayer[] | null;
 
   try {
-    const res = await fetch("http://localhost:3001/api/ranking", {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error(`Ranking API returned HTTP ${res.status}`);
-    }
-
-    const data: unknown = await res.json();
-    if (!Array.isArray(data) || !data.every(isRankingPlayer)) {
-      throw new Error("Ranking API returned invalid data");
-    }
-
-    ranking = data;
+    ranking = await fetchRanking();
   } catch (error) {
     console.error("Failed to load the ranking page:", error);
     ranking = null;

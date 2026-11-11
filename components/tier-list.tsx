@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ChevronsUp, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { MinecraftSkin } from '@/components/minecraft-skin'
+import { RankingAvatar } from '@/components/ranking-avatar'
 
 type Mode = { id: string; label: string; icon: string }
 type VanillaRanking = { name: string; rank: number; tier?: string }
@@ -328,7 +329,7 @@ export function TierList({
                             rank > 3 && 'bg-gradient-to-r from-gray-500 via-gray-400 to-gray-600',
                           )}
                         >
-                          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-4xl font-black italic text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.75)]">
+                          <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-2xl font-black italic text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.75)] sm:text-4xl">
                             {rank}.
                           </span>
                           {rank === 1 && (
@@ -346,7 +347,7 @@ export function TierList({
                                   : 'relative flex h-12 items-center',
                               )}
                             >
-                              <span className="truncate pl-2 text-sm font-bold text-slate-100 sm:text-2xl">
+                              <span className="truncate pl-2 text-[9px] font-bold text-slate-100 sm:text-sm">
                                 gmm_youtube
                               </span>
                             </div>
@@ -372,7 +373,7 @@ export function TierList({
                               </span>
                               <span
                                 className={cn(
-                                  'flex h-4 min-w-6 items-center justify-center rounded-full px-1 text-[10px] font-bold leading-none sm:min-w-8',
+                                  'flex h-4 min-w-6 items-center justify-center rounded-full px-1 text-[9px] font-bold leading-none sm:min-w-8 sm:text-[10px]',
                                   kit.id === 'vanilla'
                                     ? 'bg-amber-500/20 text-amber-300'
                                     : 'bg-slate-700/80 text-slate-300',
@@ -395,7 +396,7 @@ export function TierList({
                                 height={28}
                                 className="size-7 shrink-0 object-contain"
                               />
-                              <span className="truncate text-2xl font-black leading-none text-amber-300 [text-shadow:0_0_5px_rgba(251,191,36,0.9),0_0_12px_rgba(245,158,11,0.65)]">
+                              <span className="truncate text-base font-black leading-none text-amber-300 [text-shadow:0_0_5px_rgba(251,191,36,0.9),0_0_12px_rgba(245,158,11,0.65)] sm:text-2xl">
                                 HT1
                               </span>
                             </>
@@ -428,34 +429,27 @@ export function TierList({
                     <h3
                       id={`tier-column-${column.level}`}
                       className={cn(
-                        'flex h-[72px] items-center justify-center gap-2 text-2xl font-bold',
+                        'flex h-16 items-center justify-center gap-2 whitespace-nowrap text-2xl font-bold sm:h-[72px] sm:gap-2 sm:text-3xl',
                         column.color === 'gold' && 'bg-amber-500/20 text-amber-400',
                         column.color === 'silver' && 'bg-slate-300/20 text-slate-300',
                         column.color === 'bronze' && 'bg-orange-700/20 text-orange-400',
                         column.color === 'slate' && 'bg-slate-800/60 text-slate-300',
                       )}
                     >
-                      {column.level <= 3 && <Trophy className="size-6" aria-hidden="true" />}
+                      {column.level <= 3 && <Trophy className="size-5 shrink-0 sm:size-6" aria-hidden="true" />}
                       {column.label}
                     </h3>
                     <div className="space-y-0.5">
                       {players.map((player) => (
                         <div
                           key={`${player.name}-${player.rank}`}
-                          className="flex h-12 min-w-0 items-center gap-2 border-l-2 border-slate-500/70 bg-slate-700/70 px-3"
+                          className="flex h-12 min-w-0 items-center gap-1 border-l-2 border-slate-500/70 bg-slate-700/70 px-1 sm:gap-2 sm:px-3"
                         >
-                          <Image
-                            src={`https://mc-heads.net/avatar/${encodeURIComponent(player.name)}/32`}
-                            alt=""
-                            width={32}
-                            height={32}
-                            unoptimized
-                            className="size-8 shrink-0 rounded-sm"
-                          />
-                          <span className="min-w-0 flex-1 truncate text-sm font-medium text-white">
+                          <RankingAvatar playerName={player.name} />
+                          <span className="min-w-0 flex-1 truncate text-[8px] font-medium text-white sm:text-[10px]">
                             {player.name}
                           </span>
-                          <ChevronsUp className="size-5 shrink-0 text-slate-500" aria-hidden="true" />
+                          <ChevronsUp className="hidden size-5 shrink-0 text-slate-500 sm:block" aria-hidden="true" />
                         </div>
                       ))}
                     </div>

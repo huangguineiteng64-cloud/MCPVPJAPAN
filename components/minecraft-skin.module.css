@@ -10,6 +10,13 @@
   overflow: hidden;
 }
 
+.profileScene {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  overflow: hidden;
+}
+
 .canvas {
   display: block;
   width: 100%;

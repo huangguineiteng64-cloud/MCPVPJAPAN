@@ -2,35 +2,18 @@ import { Swords } from 'lucide-react'
 
 import { SiteHeader } from '@/components/site-header'
 import { TierList } from '@/components/tier-list'
+import { fetchRanking, type RankingPlayer } from '@/lib/ranking-api'
+import { knownTieredPlayers } from '@/lib/tiered-players'
 
-type VanillaRanking = { name: string; rank: number; tier?: string }
-const lastKnownVanillaRanking: VanillaRanking[] = [
-  { name: 'gmm_youtube', rank: 1, tier: 'HT1' },
-]
-
-async function getVanillaRanking(): Promise<{ ranking: VanillaRanking[]; isStale: boolean }> {
+async function getVanillaRanking(): Promise<{ ranking: RankingPlayer[]; isStale: boolean }> {
   try {
-    const response = await fetch('http://localhost:3001/api/ranking', { cache: 'no-store' })
-    if (!response.ok) return { ranking: lastKnownVanillaRanking, isStale: true }
-
-    const data: unknown = await response.json()
-    if (!Array.isArray(data)) return { ranking: lastKnownVanillaRanking, isStale: true }
-
-    const ranking = data.filter(
-      (player): player is VanillaRanking =>
-        typeof player === 'object' &&
-        player !== null &&
-        'name' in player &&
-        typeof player.name === 'string' &&
-        'rank' in player &&
-        typeof player.rank === 'number' &&
-        (!('tier' in player) || typeof player.tier === 'string'),
-    )
-    if (ranking.length === 0) return { ranking: lastKnownVanillaRanking, isStale: true }
+    const ranking = await fetchRanking()
+    if (ranking.length === 0) return { ranking: knownTieredPlayers, isStale: true }
 
     return { ranking, isStale: false }
-  } catch {
-    return { ranking: lastKnownVanillaRanking, isStale: true }
+  } catch (error) {
+    console.error('Failed to load the vanilla ranking:', error)
+    return { ranking: knownTieredPlayers, isStale: true }
   }
 }
 

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { PlayerSearch } from '@/components/player-search'
 
 const DISCORD_URL = 'https://discord.gg/eEYKdQUXT'
 
@@ -41,17 +42,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex flex-1 items-center justify-center">
-          <div className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-slate-950/40 px-3 py-2 shadow-inner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-4 text-muted-foreground">
-              <circle cx="11" cy="11" r="6" />
-              <path d="M16 16L21 21" strokeLinecap="round" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Player Search"
-              className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
-            />
-          </div>
+          <PlayerSearch />
         </div>
 
         <nav aria-label="メイン" className="hidden md:block">
