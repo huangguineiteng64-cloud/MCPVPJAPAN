@@ -10,7 +10,7 @@ const DISCORD_URL = 'https://discord.gg/eEYKdQUXT'
 
 const navItems = [
   { label: 'ホーム', href: '/' },
-  { label: 'ティア', href: '/tier' },
+  { label: 'ティアリスト', href: '/tier' },
   { label: 'ルール', href: '/rules' },
 ]
 

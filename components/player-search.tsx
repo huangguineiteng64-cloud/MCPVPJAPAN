@@ -82,7 +82,7 @@ export function PlayerSearch() {
         </svg>
         <input
           type="search"
-          placeholder="Player Search"
+          placeholder="プレイヤーを探す"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value)
